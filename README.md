@@ -1,7 +1,7 @@
-# olime_rest_api
+# olime_backend
 
 # runserver
-# python manage.py runserver
+# python3 manage.py runserver
 
 # clear database
 # docker volume ls
@@ -23,5 +23,4 @@
 # pip install -r /path/to/requirements.txt
 
 # 가상환경 만들기
-# python3 -m venv myvenv
-# source myvenv/bin/activate
+# pipenv shell
