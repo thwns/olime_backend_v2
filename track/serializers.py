@@ -60,8 +60,8 @@ class TrackSerializer(serializers.ModelSerializer):
         model = Track
         fields = [
             'id', 'profile', 'subject_major', 'subject_minor', 'target_test',
-            'target_grade', 'track_name', 'book', 'link',
-            'followers_num', 'rating_avg', 'task', 'image', 'published_date',
+            'target_grade', 'track_name', 'book',
+            'followers_num', 'rating_avg', 'task', 'image_url', 'published_date',
         ]
         read_only_fields = ['id']
 
@@ -102,7 +102,6 @@ class TrackDetailSerializer(TrackSerializer):
 
         return track
 
-
     def update(self, instance, validated_data):
         """Update recipe."""
         books = validated_data.pop('books', None)
@@ -113,7 +112,6 @@ class TrackDetailSerializer(TrackSerializer):
         if tasks is not None:
             instance.tasks.clear()
             self._get_or_create_tasks(tasks, instance)
-
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

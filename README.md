@@ -19,6 +19,8 @@
 # python3 manage.py migrate --fake myApp zero
 # insomnia
 
+# git push -f origin master
+
 # requirements 다운
 # pip install -r /path/to/requirements.txt
 

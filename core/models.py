@@ -122,14 +122,14 @@ class Track(models.Model):
         blank=True,
     )
     description = models.TextField(blank=True)
-    link = models.CharField(max_length=255, blank=True)
+    #link = models.CharField(max_length=255, blank=True)
     #followers = models.ManyToManyField('User', blank =True)
     followers_num = models.IntegerField()
     #comment_track = models.ManyToManyField('Comment_Track', blank=True)
     rating_avg = models.DecimalField(max_digits=5, decimal_places=2)
     task = models.ManyToManyField('Task')
-    image = models.ImageField(null=True, upload_to=track_image_file_path)
-    #image_url = models.CharField(max_length=225, blank=True)
+    #image = models.ImageField(null=True, upload_to=track_image_file_path)
+    image_url = models.CharField(max_length=225, blank=True)
     published_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
