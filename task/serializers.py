@@ -7,13 +7,14 @@ from core.models import Task
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    #track = TrackDetailSerializer(read_only=True)
     """Serializer for tasks."""
 
     class Meta:
         model = Task
         fields = [
             'id', 'track_id', 'order_major', 'order_minor',
-            'task_name','ranges', 'learning_time', 'guideline'
+            'task_name', 'ranges', 'learning_time', 'guideline'
         ]
         read_only_fields = ['id']
 

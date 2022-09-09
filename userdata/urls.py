@@ -13,6 +13,7 @@ from userdata import views
 
 router = DefaultRouter()
 router.register('userdatas', views.UserDataViewSet)
+router.register('tracklists', views.UserDataTrackList)
 
 app_name = 'userdata'
 

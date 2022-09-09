@@ -157,3 +157,9 @@ class BookViewSet(BaseTrackAttrViewSet):
     """Manage books in the database."""
     serializer_class = bookserializers.BookSerializer
     queryset = Book.objects.all()
+
+'''class TrackUserViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.TrackDetailSerializer
+    queryset = Track.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]'''

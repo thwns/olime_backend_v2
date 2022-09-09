@@ -35,11 +35,11 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name='api-schema'),
         name='api-docs',
     ),
-    path('api/user/', include('user.urls')),
-    path('api/track/', include('track.urls')),
-    path('api/user/profile/', include('profiles.urls')),
+    path('api/', include('user.urls')),
+    path('api/', include('track.urls')),
+    path('api/', include('profiles.urls')),
     #path('api/track/book/', include('book.urls')),
-    path('api/user/userdata/',include('userdata.urls')),
+    path('api/',include('userdata.urls')),
 ]
 
 if settings.DEBUG:

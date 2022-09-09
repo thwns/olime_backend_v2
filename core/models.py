@@ -68,9 +68,11 @@ class Profile(models.Model):
         (LEADER, 'Leader'),
         (ADMIN, 'Admin'),
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True, on_delete=models.CASCADE,)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             unique=True, on_delete=models.CASCADE,)
     nickname = models.CharField(max_length=225)
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True)
+    role = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES, null=True, blank=True)
     subjects = models.CharField(max_length=225)
     image_url = models.CharField(max_length=225)
     #followed_tracks = models.ManyToManyField('Track', blank =True)
@@ -88,10 +90,13 @@ class User_Data(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    track_id = models.IntegerField()
+    track = models.ForeignKey(
+        'Track',
+        on_delete=models.CASCADE,
+    )
     action_date = models.DateTimeField(default=timezone.now)
-    order_major = models.CharField(max_length=255)
-    order_minor = models.CharField(max_length=255)
+    #order_major = models.CharField(max_length=255)
+    #order_minor = models.CharField(max_length=255)
     is_done = models.BooleanField(default=False)
 
 
@@ -124,6 +129,7 @@ class Track(models.Model):
     rating_avg = models.DecimalField(max_digits=5, decimal_places=2)
     task = models.ManyToManyField('Task')
     image = models.ImageField(null=True, upload_to=track_image_file_path)
+    #image_url = models.CharField(max_length=225, blank=True)
     published_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -234,4 +240,3 @@ class Tag_Target_Grade(models.Model):
 
     def __str__(self):
         return self.name
-
