@@ -13,8 +13,6 @@ from track import views
 
 router = DefaultRouter()
 router.register('tracks', views.TrackViewSet)
-router.register('books', views.BookViewSet)
-router.register('tasks', views.TaskViewSet)
 router.register('track_alls', views.TrackAllViewSet)
 
 app_name = 'track'

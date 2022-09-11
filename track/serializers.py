@@ -53,8 +53,8 @@ class Tag_Target_GradeSerializer(serializers.ModelSerializer):
 class TrackSerializer(serializers.ModelSerializer):
     """Serializer for tracks."""
     profile = profileserializers.ProfileDetailSerializer(read_only=True)
-    book = bookserializers.BookDetailSerializer(required=False)
-    task = taskserializers.TaskDetailSerializer(required=False)
+    book = bookserializers.BookDetailSerializer(read_only=True)
+    task = taskserializers.TaskDetailSerializer(read_only=True)
 
     class Meta:
         model = Track
@@ -72,7 +72,7 @@ class TrackDetailSerializer(TrackSerializer):
     class Meta(TrackSerializer.Meta):
         fields = TrackSerializer.Meta.fields + ['description']
 
-    def _get_or_create_book(self, books, track):
+    '''def _get_or_create_book(self, books, track):
         """Handle getting or creating books as needed."""
         auth_user = self.context['request'].user
         for book in books:
@@ -117,7 +117,7 @@ class TrackDetailSerializer(TrackSerializer):
             setattr(instance, attr, value)
 
         instance.save()
-        return instance
+        return instance'''
 
 
 class TrackmageSerializer(serializers.ModelSerializer):

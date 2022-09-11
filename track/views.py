@@ -31,7 +31,7 @@ from task import serializers as taskserializers
 from book import serializers as bookserializers
 
 
-@extend_schema_view(
+'''@extend_schema_view(
     list=extend_schema(
         parameters=[
             OpenApiParameter(
@@ -156,10 +156,44 @@ class TaskViewSet(BaseTrackAttrViewSet):
 class BookViewSet(BaseTrackAttrViewSet):
     """Manage books in the database."""
     serializer_class = bookserializers.BookSerializer
-    queryset = Book.objects.all()
+    queryset = Book.objects.all()'''
 
 '''class TrackUserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TrackDetailSerializer
     queryset = Track.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]'''
+
+
+class TrackViewSet(viewsets.ModelViewSet):
+    """View for manage track APIs."""
+    serializer_class = serializers.TrackDetailSerializer
+    queryset = Track.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Retrieve recipes for authenticated user."""
+        return self.queryset.filter(leader=self.request.user).order_by('-id')
+
+    def get_serializer_class(self):
+        """Return the serializer class for request."""
+        if self.action == 'list':
+            return serializers.TrackSerializer
+
+        return self.serializer_class
+
+    def perform_create(self, serializer):
+        """Create a new track."""
+        serializer.save(leader=self.request.user)
+
+
+class TrackAllViewSet(viewsets.ModelViewSet):
+    queryset = Track.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['subject_major',
+                        'subject_minor', 'target_test', 'target_grade']
+
+    def get_serializer_class(self):
+        if self.action == 'list' or 'retrieve':
+            return serializers.TrackDetailSerializer

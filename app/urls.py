@@ -38,8 +38,9 @@ urlpatterns = [
     path('api/', include('user.urls')),
     path('api/', include('track.urls')),
     path('api/', include('profiles.urls')),
-    #path('api/track/book/', include('book.urls')),
-    path('api/',include('userdata.urls')),
+    path('api/', include('book.urls')),
+    path('api/', include('task.urls')),
+    path('api/', include('userdata.urls')),
 ]
 
 if settings.DEBUG:

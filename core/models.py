@@ -90,10 +90,7 @@ class User_Data(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    track = models.ForeignKey(
-        'Track',
-        on_delete=models.CASCADE,
-    )
+    track_id = models.IntegerField(blank=True)
     action_date = models.DateTimeField(default=timezone.now)
     #order_major = models.CharField(max_length=255)
     #order_minor = models.CharField(max_length=255)
@@ -101,7 +98,7 @@ class User_Data(models.Model):
 
 
 class Track(models.Model):
-    """Trkack object."""
+    """Track object."""
     leader = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -127,7 +124,6 @@ class Track(models.Model):
     followers_num = models.IntegerField()
     #comment_track = models.ManyToManyField('Comment_Track', blank=True)
     rating_avg = models.DecimalField(max_digits=5, decimal_places=2)
-    task = models.ManyToManyField('Task')
     #image = models.ImageField(null=True, upload_to=track_image_file_path)
     image_url = models.CharField(max_length=225, blank=True)
     published_date = models.DateTimeField(default=timezone.now)
@@ -137,9 +133,17 @@ class Track(models.Model):
 
 
 class Task(models.Model):
-    track_id = models.IntegerField()
-    order_major = models.CharField(max_length=255)
-    order_minor = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    track = models.ForeignKey(
+        'Track',
+        on_delete=models.CASCADE,
+        blank=True,
+    )
+    order_major = models.IntegerField()
+    order_minor = models.IntegerField()
     task_name = models.CharField(max_length=255)
     ranges = models.CharField(max_length=255)
     learning_time = models.CharField(max_length=255)
@@ -149,6 +153,10 @@ class Task(models.Model):
 
 
 class Book(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=255)
     sub_title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
