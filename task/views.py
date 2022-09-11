@@ -1,6 +1,7 @@
 """
 Views for the profile APIs
 """
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -31,3 +32,13 @@ class TaskViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Create a new task."""
         serializer.save(user=self.request.user)
+
+
+class TaskAllViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['track_id']
+
+    def get_serializer_class(self):
+        if self.action == 'list' or 'retrieve':
+            return serializers.TaskDetailSerializer

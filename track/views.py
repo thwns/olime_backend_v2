@@ -2,6 +2,7 @@
 Views for the track APIs
 """
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 from drf_spectacular.utils import (
     extend_schema_view,
@@ -191,8 +192,7 @@ class TrackViewSet(viewsets.ModelViewSet):
 class TrackAllViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['subject_major',
-                        'subject_minor', 'target_test', 'target_grade']
+    filterset_fields = ['id']
 
     def get_serializer_class(self):
         if self.action == 'list' or 'retrieve':
