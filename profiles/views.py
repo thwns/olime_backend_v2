@@ -24,7 +24,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         """Return the serializer class for request."""
         if self.action == 'list':
-            return serializers.ProfileSerializer
+            return serializers.ProfileDetailSerializer
 
         return self.serializer_class
 
