@@ -17,7 +17,7 @@ class Track_CompletionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track_Completion
         fields = [
-            'id', 'task_id', 'complete_date',
+            'id', 'task_id', 'order_major', 'order_minor', 'complete_date',
         ]
         read_only_fields = ['id']
 

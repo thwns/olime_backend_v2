@@ -166,6 +166,8 @@ class Track_Completion(models.Model):
         on_delete=models.CASCADE,
     )
     task_id = models.IntegerField()
+    order_major = models.IntegerField()
+    order_minor = models.IntegerField()
     complete_date = models.DateTimeField(default=timezone.now)
     completed = models.BooleanField(default=False)
 
