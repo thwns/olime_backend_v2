@@ -37,7 +37,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 class TaskAllViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['track_id']
+    filterset_fields = ['track_id', 'order_major', 'order_minor']
 
     def get_serializer_class(self):
         if self.action == 'list' or 'retrieve':

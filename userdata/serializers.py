@@ -12,7 +12,7 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User_Data
         fields = [
-            'id', 'track_id', 'task_id', 'action_date',
+            'id', 'track_id', 'follow_date',
         ]
         read_only_fields = ['id']
 
@@ -21,4 +21,4 @@ class UserDataDetailSerializer(UserDataSerializer):
     """Serializer for UserData detail view."""
 
     class Meta(UserDataSerializer.Meta):
-        fields = UserDataSerializer.Meta.fields + ['is_done']
+        fields = UserDataSerializer.Meta.fields + ['track_started']

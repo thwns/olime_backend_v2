@@ -87,11 +87,8 @@ class User_Data(models.Model):
         on_delete=models.CASCADE,
     )
     track_id = models.IntegerField(blank=True)
-    task_id = models.IntegerField(null=True, blank=True)
-    action_date = models.DateTimeField(default=timezone.now)
-    #order_major = models.CharField(max_length=255)
-    #order_minor = models.CharField(max_length=255)
-    is_done = models.BooleanField(default=False)
+    follow_date = models.DateTimeField(default=timezone.now)
+    track_started = models.BooleanField(default=False)
 
 
 class Track(models.Model):
@@ -161,6 +158,16 @@ class Book(models.Model):
     isbn = models.CharField(max_length=255)
     publisher = models.CharField(max_length=255)
     published_date = models.DateTimeField(default=timezone.now)
+
+
+class Track_Completion(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    task_id = models.IntegerField()
+    complete_date = models.DateTimeField(default=timezone.now)
+    completed = models.BooleanField(default=False)
 
 
 class Comment_Track(models.Model):

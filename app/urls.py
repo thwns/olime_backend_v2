@@ -41,6 +41,7 @@ urlpatterns = [
     path('api/', include('book.urls')),
     path('api/', include('task.urls')),
     path('api/', include('userdata.urls')),
+    path('api/', include('track_completions.urls')),
 ]
 
 if settings.DEBUG:
