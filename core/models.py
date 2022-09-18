@@ -165,6 +165,7 @@ class Track_Completion(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    track_id = models.IntegerField()
     task_id = models.IntegerField()
     order_major = models.IntegerField()
     order_minor = models.IntegerField()
