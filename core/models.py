@@ -91,9 +91,9 @@ class User_Data(models.Model):
     track_started = models.BooleanField(default=False)
 
 
-class Track(models.Model):
-    """Track object."""
-    leader = models.ForeignKey(
+class Content(models.Model):
+    """Content object."""
+    writer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
@@ -106,7 +106,7 @@ class Track(models.Model):
     subject_minor = models.CharField(max_length=255)
     target_test = models.CharField(max_length=255)
     target_grade = models.CharField(max_length=255)
-    track_name = models.CharField(max_length=255)
+    content_name = models.CharField(max_length=255)
     book = models.ForeignKey(
         'Book',
         on_delete=models.CASCADE,
@@ -120,7 +120,34 @@ class Track(models.Model):
     rating_avg = models.DecimalField(max_digits=5, decimal_places=2)
     #image = models.ImageField(null=True, upload_to=track_image_file_path)
     image_url = models.CharField(max_length=225, blank=True)
+    #published_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
+class Track(models.Model):
+    """Track object."""
+    leader = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    content = models.ForeignKey(
+        'Content',
+        on_delete=models.CASCADE,
+        blank=True,
+    )
+    profile = models.ForeignKey(
+        'Profile',
+        on_delete=models.CASCADE,
+        blank=True,
+    )
+    track_name = models.CharField(max_length=225)
+    image_url = models.CharField(max_length=225)
     published_date = models.DateTimeField(default=timezone.now)
+    description = models.TextField(blank=True)
+    followers_num = models.IntegerField()
+    rating_avg = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return self.title
@@ -146,6 +173,33 @@ class Task(models.Model):
     references = models.CharField(max_length=255)
 
 
+class Content_Star_Point(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    content_id = models.IntegerField()
+    star_point = models.IntegerField()
+
+
+class Track_Star_Point(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    track_id = models.IntegerField()
+    star_point = models.IntegerField()
+
+
+class Task_Star_Point(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    task_id = models.IntegerField()
+    star_point = models.IntegerField()
+
+
 class Book(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -167,25 +221,41 @@ class Track_Completion(models.Model):
     )
     track_id = models.IntegerField()
     task_id = models.IntegerField()
-    order_major = models.IntegerField()
-    order_minor = models.IntegerField()
     complete_date = models.DateTimeField(default=timezone.now)
-    completed = models.BooleanField(default=False)
 
 
 class Comment_Track(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name="track_reviews",
     )
-    comment = models.CharField(max_length=225)
-    rating = models.IntegerField()
+    track = models.ForeignKey(
+        'Track',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="track_reviews",
+    )
+    comment = models.TextField()
+    rating = models.PositiveIntegerField()
+
+    def __str___(self) -> str:
+        return f"{self.user} / {self.rating}"
 
 
 class Comment_Task(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name="task_reviews",
+    )
+    task = models.ForeignKey(
+        'Task',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="task_reviews",
     )
     comment = models.CharField(max_length=225)
 
@@ -207,51 +277,3 @@ class Comment_Task(models.Model):
 
     def __str__(self):
         return self.title'''
-
-
-class Tag_Subject_Major(models.Model):
-    """Tag_Subject_Major for filtering tracks."""
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class Tag_Subject_Minor(models.Model):
-    """Tag_Subject_Minor for tracks."""
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class Tag_Target_Test(models.Model):
-    """Tag_Target_Test for tracks."""
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class Tag_Target_Grade(models.Model):
-    """Tag_Target_Grade for tracks."""
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name

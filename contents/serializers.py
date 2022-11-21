@@ -4,12 +4,12 @@ Serializers for recipe APIs
 from rest_framework import serializers
 
 from core.models import (
-    Track,
-    Profile,
     Content,
+    Profile,
+    Book
 )
 
-from contents import serializers as contentserializers
+from book import serializers as bookserializers
 from profiles import serializers as profileserializers
 
 '''class BookSerializer(serializers.ModelSerializer):
@@ -48,25 +48,26 @@ class Tag_Target_GradeSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']'''
 
 
-class TrackSerializer(serializers.ModelSerializer):
-    """Serializer for tracks."""
+class ContentSerializer(serializers.ModelSerializer):
+    """Serializer for Contents."""
     profile = profileserializers.ProfileDetailSerializer(read_only=True)
-    content = contentserializers.ContentDetailSerializer(read_only=True)
+    book = bookserializers.BookDetailSerializer(read_only=True)
 
     class Meta:
-        model = Track
+        model = Content
         fields = [
-            'id', 'content', 'profile', 'track_name', 'image_url',
-            'published_date', 'followers_num', 'rating_avg',
+            'id', 'book', 'profile', 'content_name', 'image_url',
+            'followers_num', 'rating_avg',
+            'subject_major', 'subject_minor', 'target_test', 'target_grade',
         ]
         read_only_fields = ['id']
 
 
-class TrackDetailSerializer(TrackSerializer):
-    """Serializer for track detail view."""
+class ContentDetailSerializer(ContentSerializer):
+    """Serializer for Content detail view."""
 
-    class Meta(TrackSerializer.Meta):
-        fields = TrackSerializer.Meta.fields + ['description']
+    class Meta(ContentSerializer.Meta):
+        fields = ContentSerializer.Meta.fields + ['description']
 
     '''def _get_or_create_book(self, books, track):
         """Handle getting or creating books as needed."""
@@ -116,11 +117,11 @@ class TrackDetailSerializer(TrackSerializer):
         return instance'''
 
 
-class TrackmageSerializer(serializers.ModelSerializer):
-    """Serializer for uploading images to tracks."""
+class ContentmageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading images to Content."""
 
     class Meta:
-        model = Track
+        model = Content
         fields = ['id', 'image']
         read_only_fields = ['id']
         extra_kwargs = {'image': {'required': 'True'}}

@@ -41,7 +41,7 @@ class Track_CompletionViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['completed']
+    filterset_fields = ['track_id']
 
     def get_queryset(self):
         """Retrieve track_completions for authenticated user."""

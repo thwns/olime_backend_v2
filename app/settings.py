@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'userdata',
     'book',
     'django_filters',
+    'contents',
+    'content_star_points',
+    'track_star_points',
+    'task_star_points',
+    'track_completions',
 ]
 
 MIDDLEWARE = [
